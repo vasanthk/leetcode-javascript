@@ -1,2 +1,3 @@
-# leetcode-js-solns
-Just to keep the brain in shape!
+# Leetcode JavaScript 
+
+Just to keep my brain muscle in shape :) 
