@@ -10,65 +10,65 @@
  */
 
 var wordPatternMatch = function (pattern, str) {
-  var map = {};
-  var set = [];
+  var patternStrMap = {};
+  var strChunkSet = [];
 
-  return isMatch(str, 0, pattern, 0, map, set);
+  return isMatch(str, 0, pattern, 0, patternStrMap, strChunkSet);
 };
 
-var isMatch = function (str, i, pat, j, map, set) {
+var isMatch = function (str, currStrIndex, pattern, currPatternIndex, patternStrMap, strChunkSet) {
   // When both the string and the pattern have been checked completely and match
-  if (i === str.length && j === pat.length) {
+  if (currStrIndex === str.length && currPatternIndex === pattern.length) {
     return true;
   }
 
-  // When one of either str or pat has been checked completely, but the other isn't.
-  if (i === str.length || j === pat.length) {
+  // When one of either str or pattern has been checked completely, but the other isn't.
+  if (currStrIndex === str.length || currPatternIndex === pattern.length) {
     return false;
   }
 
   // Get the current pattern character
-  var c = pat[j];
+  var currentPatternChar = pattern[currPatternIndex];
 
-  // if the pattern character exists in map
-  if (c in map) {
-    var s = map[c];
+  // if the pattern character exists in patternStrMap
+  if (currentPatternChar in patternStrMap) {
+    var currentMappedStr = patternStrMap[currentPatternChar];
 
-    // then check if we can use it to match str[i... i+s.length]
-    if (str.substr(i, s.length) !== s) {
+    // then check if we can use it to match str[currStrIndex... currStrIndex+s.length]
+    if (str.substr(currStrIndex, currentMappedStr.length) !== currentMappedStr) {
       return false;
     }
 
     // If it can match, great, continue to match the rest.
-    return isMatch(str, i + s.length, pat, j + 1, map, set);
+    return isMatch(str, currStrIndex + currentMappedStr.length, pattern, currPatternIndex + 1, patternStrMap, strChunkSet);
   }
 
-  // pattern character does not exist in the map
-  for (var k = i; k < str.length; k++) {
-    var p = str.substring(i, k + 1);
-    if (set.indexOf(p) !== -1) {
+  // pattern character does not exist in the patternStrMap
+  for (var k = currStrIndex; k < str.length; k++) {
+    var strChunk = str.substring(currStrIndex, k + 1);
+    if (strChunkSet.indexOf(strChunk) !== -1) {
       continue;
     }
 
     // Create or update it.
-    map[c] = p;
+    patternStrMap[currentPatternChar] = strChunk;
 
-    if (set.indexOf(p) == -1) {
-      set.push(p);
+    if (strChunkSet.indexOf(strChunk) == -1) {
+      strChunkSet.push(strChunk);
     }
     // Continue to match the rest
-    if (isMatch(str, k + 1, pat, j + 1, map, set)) {
+    if (isMatch(str, k + 1, pattern, currPatternIndex + 1, patternStrMap, strChunkSet)) {
       return true;
     }
 
     // backtracking
-    if (c in map) {
-      delete map[c];
+    if (currentPatternChar in patternStrMap) {
+      delete patternStrMap[currentPatternChar];
     }
 
-    var pIndex = set.indexOf(p);
+    var pIndex = strChunkSet.indexOf(strChunk);
     if (pIndex > -1) {
-      set.splice(pIndex, 1);
+      strChunkSet.splice(pIndex, 1);
     }
   }
 
