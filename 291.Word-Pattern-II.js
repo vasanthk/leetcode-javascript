@@ -10,8 +10,8 @@
  */
 
 var wordPatternMatch = function (pattern, str) {
-  var patternStrMap = {};
-  var strChunkSet = [];
+  var patternStrMap = {}; // A map of key-value pairs where key -> pattern letter and value -> corresponding string chunk from str.
+  var strChunkSet = [];   // Set containing unique string chunks which are being matched with the pattern letters
 
   return isMatch(str, 0, pattern, 0, patternStrMap, strChunkSet);
 };
@@ -41,37 +41,36 @@ var isMatch = function (str, currStrIndex, pattern, currPatternIndex, patternStr
 
     // If it can match, great, continue to match the rest.
     return isMatch(str, currStrIndex + currentMappedStr.length, pattern, currPatternIndex + 1, patternStrMap, strChunkSet);
+  } else {
+    // pattern character does not exist in the patternStrMap
+    for (var i = currStrIndex; i < str.length; i++) {
+      var strChunk = str.substring(currStrIndex, i + 1);
+      if (strChunkSet.indexOf(strChunk) !== -1) {
+        continue;
+      }
+
+      // Create or update it.
+      patternStrMap[currentPatternChar] = strChunk;
+
+      if (strChunkSet.indexOf(strChunk) === -1) {
+        strChunkSet.push(strChunk);
+      }
+      // Continue to match the rest
+      if (isMatch(str, i + 1, pattern, currPatternIndex + 1, patternStrMap, strChunkSet)) {
+        return true;
+      }
+
+      // backtracking
+      if (currentPatternChar in patternStrMap) {
+        delete patternStrMap[currentPatternChar];
+      }
+
+      var strChunkIndex = strChunkSet.indexOf(strChunk);
+      if (strChunkIndex > -1) {
+        strChunkSet.splice(strChunkIndex, 1);
+      }
+    }
   }
-
-  // pattern character does not exist in the patternStrMap
-  for (var k = currStrIndex; k < str.length; k++) {
-    var strChunk = str.substring(currStrIndex, k + 1);
-    if (strChunkSet.indexOf(strChunk) !== -1) {
-      continue;
-    }
-
-    // Create or update it.
-    patternStrMap[currentPatternChar] = strChunk;
-
-    if (strChunkSet.indexOf(strChunk) == -1) {
-      strChunkSet.push(strChunk);
-    }
-    // Continue to match the rest
-    if (isMatch(str, k + 1, pattern, currPatternIndex + 1, patternStrMap, strChunkSet)) {
-      return true;
-    }
-
-    // backtracking
-    if (currentPatternChar in patternStrMap) {
-      delete patternStrMap[currentPatternChar];
-    }
-
-    var pIndex = strChunkSet.indexOf(strChunk);
-    if (pIndex > -1) {
-      strChunkSet.splice(pIndex, 1);
-    }
-  }
-
   // No luck
   return false;
 };
