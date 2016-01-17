@@ -4,6 +4,9 @@
  * @return {boolean}
  *
  * Your runtime beats 100% of javascript submissions.
+ *
+ * @Reference:
+ * Java version: https://leetcode.com/discuss/63252/share-my-java-backtracking-solution
  */
 
 var wordPatternMatch = function (pattern, str) {
