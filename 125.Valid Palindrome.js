@@ -5,6 +5,7 @@
  * Your runtime beats 94.49% of javascriptsubmissions.
  */
 var isPalindrome = function (s) {
+  // Removes non alphanumeric characters from the string.
   s = s.replace(/\W/g, '');
   if (s === '') {
     return true;
