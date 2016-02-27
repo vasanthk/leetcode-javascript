@@ -31,10 +31,11 @@ var wordBreak = function (str, wordDict, cache) {
   for (var i = 1; i <= str.length; i++) {
     if (wordDict.indexOf(str.slice(0, i)) !== -1) {
       // Recursion (Sub problem - Dynamic Programming)
-      var words = wordBreak(str.slice(i), wordDict, cache);
+      var chunks = wordBreak(str.slice(i), wordDict, cache);
 
-      words.forEach(function (word) {
-        solutions.push(str.slice(0, i) + (word ? (' ' + word) : ''));
+      chunks.forEach(function (chunk) {
+        // Note: the `chunk` could be a single word or a space separated valid sentence.
+        solutions.push(str.slice(0, i) + (chunk ? (' ' + chunk) : ''));
       });
     }
   }
