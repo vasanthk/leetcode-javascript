@@ -8,39 +8,39 @@
  * Your runtime beats 100.00% of javascriptsubmissions.
  */
 
-var wordBreak = function (s, wordDict, store) {
-  if (!s) {
+var wordBreak = function (str, wordDict, cache) {
+  if (!str) {
     return [''];
   }
 
-  if (s.length === 1 && wordDict.has(s)) {
-    return [s];
+  if (str.length === 1 && wordDict.has(str)) {
+    return [str];
   }
 
   if (!wordDict || wordDict.length === 0) {
     return [''];
   }
 
-  store = store || {};
-  if (store[s] !== undefined) {
-    return store[s];
+  cache = cache || {};
+  if (cache[str] !== undefined) {
+    return cache[str];
   }
 
   var solutions = [];
 
-  for (var i = 1; i <= s.length; i++) {
-    if (wordDict.has(s.slice(0, i))) {
+  for (var i = 1; i <= str.length; i++) {
+    if (wordDict.indexOf(str.slice(0, i)) !== -1) {
       // Recursion (Sub problem - Dynamic Programming)
-      wordBreak(s.slice(i), wordDict, store).forEach(function (w) {
-        solutions.push(s.slice(0, i) + (w ? (' ' + w) : ''));
+      wordBreak(str.slice(i), wordDict, cache).forEach(function (w) {
+        solutions.push(str.slice(0, i) + (w ? (' ' + w) : ''));
       });
     }
   }
 
-  store[s] = solutions;
+  cache[str] = solutions;
 
   return solutions;
 };
 
-console.log(wordBreak("catsanddog", new Set(["cat", "cats", "and", "sand", "dog"])));
+console.log(wordBreak("catsanddog", ["cat", "cats", "and", "sand", "dog"]));
 // ["cat sand dog", "cats and dog"]
