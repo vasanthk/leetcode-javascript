@@ -5,9 +5,10 @@
  * Your runtime beats 86.67% of javascriptsubmissions.
  */
 var isValidSudoku = function (board) {
+  var dupCheck;
   // col
   for (var i = 0; i < board.length; i++) {
-    var dupCheck = [];
+    dupCheck = {};
 
     for (var j = 0; j < board[0].length; j++) {
       if (board[i][j] !== '.' && dupCheck[board[i][j]]) {
@@ -19,7 +20,7 @@ var isValidSudoku = function (board) {
   }
   // row
   for (i = 0; i < board.length; i++) {
-    dupCheck = [];
+    dupCheck = {};
 
     for (j = 0; j < board[0].length; j++) {
       if (board[j][i] !== '.' && dupCheck[board[j][i]]) {
@@ -32,7 +33,7 @@ var isValidSudoku = function (board) {
   // 9 x 9 blocks
   for (i = 0; i < board.length; i += 3) {
     for (j = 0; j < board.length; j += 3) {
-      dupCheck = [];
+      dupCheck = {};
 
       for (var x = 0; x < 3; x++) {
         for (var y = 0; y < 3; y++) {
@@ -47,6 +48,4 @@ var isValidSudoku = function (board) {
   }
 
   return true;
-
-
 };
