@@ -31,8 +31,10 @@ var wordBreak = function (str, wordDict, cache) {
   for (var i = 1; i <= str.length; i++) {
     if (wordDict.indexOf(str.slice(0, i)) !== -1) {
       // Recursion (Sub problem - Dynamic Programming)
-      wordBreak(str.slice(i), wordDict, cache).forEach(function (w) {
-        solutions.push(str.slice(0, i) + (w ? (' ' + w) : ''));
+      var words = wordBreak(str.slice(i), wordDict, cache);
+
+      words.forEach(function (word) {
+        solutions.push(str.slice(0, i) + (word ? (' ' + word) : ''));
       });
     }
   }
