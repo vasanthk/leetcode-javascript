@@ -13,7 +13,7 @@ var wordBreak = function (str, wordDict, cache) {
     return [''];
   }
 
-  if (str.length === 1 && wordDict.has(str)) {
+  if (str.length === 1 && wordDict.indexOf(str) !== -1) {
     return [str];
   }
 
