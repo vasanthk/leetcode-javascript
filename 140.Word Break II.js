@@ -47,3 +47,31 @@ var wordBreak = function (str, wordDict, cache) {
 
 console.log(wordBreak("catsanddog", ["cat", "cats", "and", "sand", "dog"]));
 // ["cat sand dog", "cats and dog"]
+
+
+// SIMPLER ATTEMPT
+
+function wordBreak(str, dict, result, finalRes) {
+  if (!str || !str.length || !dict.length) {
+    return;
+  }
+
+  result = result || [];
+  finalRes = finalRes || [];
+
+  var currStr = '';
+  for (var i = 0; i < str.length; i++) {
+    currStr = str.substr(0, i + 1);
+    if (dict.indexOf(currStr) !== -1) {
+      result.push(currStr);
+      wordBreak(str.slice(i + 1), dict, result);
+      finalRes.push(result.join(' '));
+      result = [];
+    }
+  }
+
+  return finalRes;
+}
+
+console.log(wordBreak("catsanddog", ["cat", "cats", "and", "sand", "dog"]));
+// ["cat sand dog", "cats and dog"]
