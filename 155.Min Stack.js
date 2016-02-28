@@ -1,5 +1,10 @@
 /**
- * @constructor
+ * Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
+ *
+ * push(x) -- Push element x onto stack.
+ * pop() -- Removes the element on top of the stack.
+ * top() -- Get the top element.
+ * getMin() -- Retrieve the minimum element in the stack.
  *
  * Your runtime beats 96.43% of javascriptsubmissions.
  */
@@ -46,6 +51,6 @@ MinStack.prototype.top = function () {
  */
 MinStack.prototype.getMin = function () {
   return this.min[this.min.length - 1];
-  // Caveat: If the first element was the min and it was popped, the array woudl be empty.
+  // Caveat: If the first element was the min and it was popped, the array would be empty.
   // But the question doesn't mention that scenario, so we are good for now.
 };
