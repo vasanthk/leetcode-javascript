@@ -35,3 +35,33 @@ function helper(nums, tempList, res, targetLen, index) {
     tempList.pop();
   }
 }
+
+// Alternative solution
+// Returns all combinations
+function subsets(nums) {
+  nums.sort(function (a, b) {
+    return a - b;
+  });
+
+  return combinations(nums);
+
+  function combinations(arr, active, subsets) {
+    active = active || [];
+    subsets = subsets || [];
+
+    if (arr.length == 0) {
+      subsets.push(active);
+    } else {
+      combinations(arr.slice(1), active.concat(arr[0]), subsets);
+      // For string combinations
+      // combinations(rest.substring(1, rest.length), active + rest.charAt(0))
+
+      combinations(arr.slice(1), active, subsets);
+      // For string combinations
+      // combinations(rest.substring(1, rest.length), active)
+    }
+    return subsets;
+  }
+}
+
+
