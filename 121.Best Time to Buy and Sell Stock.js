@@ -9,19 +9,19 @@ var maxProfit = function (prices) {
     return 0;
   }
 
-  var max = 0;
+  var min;
+  var max;
   var diff = 0;
-  var min = Infinity;
 
   for (var i = 0; i < prices.length; i++) {
     var price = prices[i];
-    if (min > price) {
+    if (price < min || min == undefined) {
       min = price;
     }
 
     diff = price - min;
 
-    if (max < diff) {
+    if (diff > max || max === undefined) {
       max = diff;
     }
   }
