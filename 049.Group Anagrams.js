@@ -22,6 +22,9 @@ var groupAnagrams = function (strs) {
     }
 
     insert(map[key], str);
+    // OR
+    // map[key].push(str);
+    // map[key].sort();
   });
 
   return Object.keys(map).reduce(function (result, key) {
